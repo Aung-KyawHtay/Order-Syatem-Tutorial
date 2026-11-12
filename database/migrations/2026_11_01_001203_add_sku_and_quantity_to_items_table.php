@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->unique('sku');
+            $table->string('sku')->unique()->after('name');
+            $table->integer('quantity')->default(0)->after('price');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('items', function (Blueprint $table) {
             $table->dropUnique(['sku']);
+            $table->dropColumn(['sku', 'quantity']);
         });
     }
 };
